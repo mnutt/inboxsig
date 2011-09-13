@@ -8,7 +8,7 @@ redis.set('foo', 'bar');
 
 app.get('/', function(request, response) {
   redis.get('foo', function(err, value) {
-    response.send('Hello World! ' + foo);
+    response.send('Hello World! ' + value);
   });
 });
 
