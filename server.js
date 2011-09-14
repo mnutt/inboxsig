@@ -23,12 +23,14 @@ function oauth() {
     querystring.escape("https://mail.google.com/mail/feed/atom")
 	];
 
+  var hostname = req.header('Host');
+
   return new OAuth(getRequestTokenUrl+"?scope="+gdataScopes.join('+'),
 	          "https://www.google.com/accounts/OAuthGetAccessToken",
 	          "anonymous",
 	          "anonymous",
 	          "1.0",
-	          "http://localhost:" + port + "/google_cb",
+	          "http://" + hostname + "/google_cb",
 	          "HMAC-SHA1");
 }
 
