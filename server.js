@@ -4,7 +4,7 @@ var express = require('express'),
   rbytes = require('rbytes'),
   redis = require('redis-url').createClient(process.env.REDISTOGO_URL || "redis://localhost:6379");
 
-var port = process.env.PORT
+var port = process.env.PORT || 3008;
 
 // Setup the Express.js server
 var app = express.createServer();
@@ -28,7 +28,7 @@ function oauth(host) {
 	          "anonymous",
 	          "anonymous",
 	          "1.0",
-	          "http://" + hostname + "/google_cb",
+	          "http://" + host + "/google_cb",
 	          "HMAC-SHA1");
 }
 
@@ -44,7 +44,7 @@ app.get('/', function(req, res){
 
 // Request an OAuth Request Token, and redirects the user to authorize it
 app.get('/google_login', function(req, res) {
-	var oa = oauth(req.header('Host'););
+	var oa = oauth(req.header('Host'));
 
 	oa.getOAuthRequestToken(function(error, oauth_token, oauth_token_secret, results){
 	  if(error) {
@@ -69,7 +69,7 @@ app.get('/google_cb', function(req, res) {
 
 	// get the OAuth access token with the 'oauth_verifier' that we received
 
-	var oa = oauth(req.header('Host'););
+	var oa = oauth(req.header('Host'));
 
 	oa.getOAuthAccessToken(
 		req.session.oauth_token,
@@ -102,7 +102,7 @@ function require_google_login(req, res, next) {
 };
 
 app.get('/google_unread/:key', function(req, res) {
-	var oa = oauth(req.header('Host'););
+	var oa = oauth(req.header('Host'));
 
   redis.get(req.params.key + ":auth", function(err, value) {
     var auth;
