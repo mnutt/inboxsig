@@ -4,6 +4,8 @@ var express = require('express'),
   rbytes = require('rbytes'),
   redis = require('redis-url').createClient(process.env.REDISTOGO_URL || "redis://localhost:6379");
 
+var port = process.env.PORT
+
 // Setup the Express.js server
 var app = express.createServer();
 app.use(express.logger());
@@ -26,7 +28,7 @@ function oauth() {
 	          "anonymous",
 	          "anonymous",
 	          "1.0",
-	          "http://localhost:3008/google_cb",
+	          "http://localhost:" + port + "/google_cb",
 	          "HMAC-SHA1");
 }
 
@@ -134,5 +136,5 @@ app.get('/google_unread/:key', function(req, res) {
 
 });
 
-app.listen(3008);
-console.log("listening on http://localhost:3008");
+app.listen(port);
+console.log("listening on http://localhost:" + port);
