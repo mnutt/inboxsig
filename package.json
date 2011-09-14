@@ -1,8 +1,11 @@
 {
-  "name": "inboxsig",
+  "name": "oauth-example",
   "version": "0.0.1",
   "dependencies": {
     "express": "2.2.0",
-    "redis-url": "0.0.1"
+    "oauth": "0.9.5",
+    "ejs": "0.4.3",
+    "redis-url": "0.0.1",
+    "rbytes" : "0.0.2"
   }
 }
