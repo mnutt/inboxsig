@@ -34,12 +34,7 @@ function oauth(host) {
 
 // Home Page
 app.get('/', function(req, res){
-	if(!req.session.oauth_access_token) {
-		res.redirect("/google_login");
-	}
-	else {
-		res.redirect("/google_contacts");
-	}
+  res.render("index.ejs");
 });
 
 // Request an OAuth Request Token, and redirects the user to authorize it
@@ -113,6 +108,34 @@ app.get('/google_unread/:key', function(req, res) {
       res.redirect("/google_login?action="+querystring.escape(req.originalUrl));
       return;
     }
+
+	  oa.getProtectedResource(
+		  "https://mail.google.com/mail/feed/atom",
+		  "GET",
+      auth.token,
+      auth.secret,
+		  function (error, data, response) {
+        console.log(data);
+        var unreadMatch = data.match(/<fullcount>(\d+)<\/fullcount>/);
+        if(unreadMatch) {
+          var unreadCount = parseInt(unreadMatch[1], 10);
+        } else {
+          var unreadCount = -1;
+        }
+
+			  res.render('google_unread.ejs', {
+				  locals: { unreadCount: unreadCount }
+			  });
+	    });
+  });
+
+});
+
+app.get('/google_unread_capture', function(req, res) {
+  var oa = oauth(req.header('Host'));
+
+  redis.get(req.params.key + ":oauth", function(err, value) {
+    var auth = JSON.parse(value);
 
 	  oa.getProtectedResource(
 		  "https://mail.google.com/mail/feed/atom",
