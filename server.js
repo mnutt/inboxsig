@@ -15,15 +15,13 @@ app.use(express.session({
 	secret: "haeD9zizaeMiey3eFei8aipuad1IGh6ahiShei0EMoQu9FieMux1Pee9johY3eoxIeCh3oos"
 }));
 
-function oauth() {
+function oauth(host) {
   var getRequestTokenUrl = "https://www.google.com/accounts/OAuthGetRequestToken";
 
 	// GData specifid: scopes that wa want access to
 	var gdataScopes = [
     querystring.escape("https://mail.google.com/mail/feed/atom")
 	];
-
-  var hostname = req.header('Host');
 
   return new OAuth(getRequestTokenUrl+"?scope="+gdataScopes.join('+'),
 	          "https://www.google.com/accounts/OAuthGetAccessToken",
@@ -46,7 +44,7 @@ app.get('/', function(req, res){
 
 // Request an OAuth Request Token, and redirects the user to authorize it
 app.get('/google_login', function(req, res) {
-	var oa = oauth();
+	var oa = oauth(req.header('Host'););
 
 	oa.getOAuthRequestToken(function(error, oauth_token, oauth_token_secret, results){
 	  if(error) {
@@ -71,7 +69,7 @@ app.get('/google_cb', function(req, res) {
 
 	// get the OAuth access token with the 'oauth_verifier' that we received
 
-	var oa = oauth();
+	var oa = oauth(req.header('Host'););
 
 	oa.getOAuthAccessToken(
 		req.session.oauth_token,
@@ -104,7 +102,7 @@ function require_google_login(req, res, next) {
 };
 
 app.get('/google_unread/:key', function(req, res) {
-	var oa = oauth();
+	var oa = oauth(req.header('Host'););
 
   redis.get(req.params.key + ":auth", function(err, value) {
     var auth;
