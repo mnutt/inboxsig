@@ -13,7 +13,7 @@ app.use(express.bodyParser());
 app.use(express.static(__dirname + '/public'));
 app.use(express.cookieParser());
 app.use(express.session({
-	secret: "haeD9zizaeMiey3eFei8aipuad1IGh6ahiShei0EMoQu9FieMux1Pee9johY3eoxIeCh3oos"
+	secret: process.env.SESSION_SECRET || "haeD9zizaeMiey3eFei8aipuad1IGh6ahiShei0EMoQu9FieMux1Pee9johY3eoxIeCh3oos"
 }));
 
 function oauth(host) {
