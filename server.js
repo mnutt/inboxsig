@@ -135,7 +135,13 @@ app.get('/google_unread/:key', function(req, res) {
 app.get('/google_unread_capture', function(req, res) {
   var oa = oauth(req.header('Host'));
 
-  redis.get(req.param('key') + ":auth", function(err, value) {
+  var key = req.param('key');
+
+  if(typeof(req.param('key')) == 'object') {
+    key = key[0];
+  }
+
+  redis.get(key + ":auth", function(err, value) {
     if(!value) {
       res.render('blank.ejs');
       return;
