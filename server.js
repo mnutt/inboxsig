@@ -138,7 +138,7 @@ app.get('/google_unread_capture', function(req, res) {
   var key = req.param('key');
 
   if(typeof(req.param('key')) == 'object') {
-    key = key[0];
+    key = key[key.length - 1];
   }
 
   redis.get(key + ":auth", function(err, value) {
