@@ -15,8 +15,8 @@ Requirements
 Setup
 =====
 
-  npm install
-  node server.js
+    npm install
+    node server.js
 
 Log into Movable Ink and crop your own Real-time content pointing to your
 InboxSig instance.  Then take the embed URL and put it into capture.ejs.
