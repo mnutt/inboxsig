@@ -10,6 +10,7 @@ var port = process.env.PORT || 3008;
 var app = express.createServer();
 app.use(express.logger());
 app.use(express.bodyParser());
+app.use(express.static(__dirname + '/public'));
 app.use(express.cookieParser());
 app.use(express.session({
 	secret: "haeD9zizaeMiey3eFei8aipuad1IGh6ahiShei0EMoQu9FieMux1Pee9johY3eoxIeCh3oos"
@@ -123,8 +124,8 @@ app.get('/google_unread/:key', function(req, res) {
           var unreadCount = -1;
         }
 
-			  res.render('google_unread.ejs', {
-				  locals: { unreadCount: unreadCount }
+			  res.render('unread_count.ejs', {
+				  locals: { unreadCount: unreadCount, key: req.params.key }
 			  });
 	    });
   });
@@ -134,7 +135,7 @@ app.get('/google_unread/:key', function(req, res) {
 app.get('/google_unread_capture', function(req, res) {
   var oa = oauth(req.header('Host'));
 
-  redis.get(req.params.key + ":oauth", function(err, value) {
+  redis.get(req.param('key') + ":auth", function(err, value) {
     var auth = JSON.parse(value);
 
 	  oa.getProtectedResource(

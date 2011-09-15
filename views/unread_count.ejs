@@ -1,3 +1,18 @@
-<h1>Unread Messages</h1>
+<h1>InboxSig</h1>
 
-<p>count: <%= unreadCount %></p>
+<p>We've successfully auth'd you with Gmail, now here's your signature:</p>
+
+<iframe style="width: 300px; height: 30px; border: 0; overflow: hidden; display: block; margin-bottom: 20px;" src="/google_unread_capture?key=<%= key %>"></iframe>
+
+<textarea class="embed" style="width: 500px; height: 100px;"><a href="http://ink1001.com/lp/64035c5191f9bcf9/url?id=<%= key %>" style="text-decoration: none; display: block;"><img alt="Show images for my unread message count" src="http://ink1002.com/lp/64035c5191f9bcf9.png?id=<%= key %>" style="border: 0;" border="0" /></a><br/><a style="font-size: 8px; color: #DDD;" href="http://movableink.com?s=is">by MovableInk</a></textarea>
+
+<div class="clip_container" style="position:relative; margin-top: 5px;">
+  <button class="clip_button button awesome" style="font-size: 12px !important; padding: 5px;">
+    <img src="/images/clipboard.png", style="vertical-align: top;" />
+    <span>Copy to Clipboard</span>
+  </button>
+</div>
+
+<script>
+  $("div.clip_container").clipboard("textarea.embed");
+</script>
