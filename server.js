@@ -124,7 +124,7 @@ app.get('/google_unread/:key', function(req, res) {
           var unreadCount = -1;
         }
 
-			  res.render('unread_count.ejs', {
+			  res.render('google_unread.ejs', {
 				  locals: { unreadCount: unreadCount, key: req.params.key }
 			  });
 	    });
@@ -162,7 +162,7 @@ app.get('/google_unread_capture', function(req, res) {
           var unreadCount = -1;
         }
 
-			  res.render('google_unread.ejs', {
+			  res.render('capture.ejs', {
 				  locals: { unreadCount: unreadCount }
 			  });
 	    });
