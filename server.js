@@ -138,6 +138,7 @@ app.get('/google_unread_capture', function(req, res) {
   redis.get(req.param('key') + ":auth", function(err, value) {
     if(!value) {
       res.render('blank.ejs');
+      return;
     }
     var auth = JSON.parse(value);
 
